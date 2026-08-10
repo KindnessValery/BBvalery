@@ -21,7 +21,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           <img
             src={article.heroImage}
             alt={article.title}
-            className="w-full h-full object-cover object-[center_15%] group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
           <div className="flex items-center justify-center w-full h-full text-gray-400">
