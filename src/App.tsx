@@ -7,7 +7,7 @@ import { Footer } from "./components/Footer/Footer";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/BBvalery">
       <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900 font-sans">
         <Header />
 
