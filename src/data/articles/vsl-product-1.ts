@@ -8,7 +8,7 @@ export const vslProduct1: Article = {
   title:
     "Я думала, что активная жизнь осталась в прошлом… Пока старый знакомый не рассказал мне об этом рецепте",
   description: "Узнайте, как вылечить суставы.",
-  heroImage: "/images/tsl/inga/hero.jpg",
+  heroImage: "https://bbvalery.b-cdn.net/images/tsl/inga/hero.jpg",
 
   video: {
     type: "bunny",
