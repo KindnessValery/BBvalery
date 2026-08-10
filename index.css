@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,600&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+
+  --color-brand-dark: #0d0d0c;
+  --color-brand-cream: #faf8f4;
+  --color-brand-orange: #e8530a;
+  --color-brand-orange-dark: #c4420a;
+  --color-brand-orange-light: #fff0e8;
+  --color-brand-border: #e8e2da;
+  --color-brand-muted: #8a8073;
+  --color-brand-card: #ffffff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-brand-cream);
+  color: var(--color-brand-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+/* Hide scrollbar but allow scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Focus visible styles */
+:focus-visible {
+  outline: 2px solid var(--color-brand-orange);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Smooth transitions */
+a, button {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease;
+}

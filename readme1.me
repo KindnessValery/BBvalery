@@ -1,0 +1,817 @@
+# Project Structure & Development Guide
+
+## Стек проекта
+
+Проект построен на:
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Lucide React
+
+Проект должен запускаться и разрабатываться как обычный React/Vite проект через VS Code.
+
+---
+
+# Структура проекта
+
+```text
+src/
+├── components/
+│   ├── ArticleCard/
+│   ├── ArticleList/
+│   ├── Hero/
+│   ├── Testimonials/
+│   ├── PurchaseForm/
+│   ├── Header/
+│   └── Footer/
+│
+├── data/
+│   ├── articles/
+│   │   ├── index.ts
+│   │   ├── vsl-product-1.ts
+│   │   └── tsl-product-1.ts
+│   │
+│   └── products/
+│       ├── index.ts
+│       └── product-1.ts
+│
+├── types/
+│   └── index.ts
+│
+├── pages/
+│
+├── App.tsx
+└── main.tsx
+
+public/
+└── images/
+    ├── vsl/
+    ├── tsl/
+    ├── products/
+    └── testimonials/
+Основное правило архитектуры
+
+Компоненты React отвечают только за отображение интерфейса.
+
+Данные, тексты статей, товары, изображения и настройки НЕ должны храниться большими массивами внутри React-компонентов.
+
+Плохой вариант:
+
+const articles = [
+  {
+    title: "Очень длинная статья...",
+    content: "Много текста..."
+  }
+];
+
+внутри компонента.
+
+Правильный вариант:
+
+src/data/articles/
+
+Все статьи должны храниться отдельно от компонентов.
+
+Статьи
+
+Все статьи находятся в:
+
+src/data/articles/
+
+Каждая статья должна находиться в отдельном файле.
+
+Пример:
+
+src/data/articles/
+├── index.ts
+├── vsl-product-1.ts
+├── vsl-product-2.ts
+├── tsl-inga-nikolaevna.ts
+└── tsl-story-2.ts
+Добавление новой статьи
+
+Для добавления новой статьи необходимо создать новый файл.
+
+Например:
+
+src/data/articles/tsl-inga-nikolaevna.ts
+
+Пример:
+
+import type { Article } from "../../types";
+
+export const tslIngaNikolaevna: Article = {
+  id: "tsl-inga-nikolaevna",
+  slug: "inga-nikolaevna",
+
+  type: "TSL",
+
+  category: "Истории",
+
+  title: "В 75 лет она снова вернулась к активной жизни",
+
+  description:
+    "История Инги Николаевны о проблемах с суставами и её личном опыте.",
+
+  heroImage: "/images/tsl/inga/hero.webp",
+
+  images: [
+    "/images/tsl/inga/1.webp",
+    "/images/tsl/inga/2.webp"
+  ],
+
+  benefits: [
+    "История личного опыта",
+    "Возвращение к более активному образу жизни",
+    "Больше времени с семьёй"
+  ],
+
+  content: [],
+
+  testimonials: []
+};
+
+После создания статьи её необходимо добавить в:
+
+src/data/articles/index.ts
+
+Например:
+
+import type { Article } from "../../types";
+
+import { vslProduct1 } from "./vsl-product-1";
+import { tslProduct1 } from "./tsl-product-1";
+import { tslIngaNikolaevna } from "./tsl-inga-nikolaevna";
+
+export const articles: Article[] = [
+  vslProduct1,
+  tslProduct1,
+  tslIngaNikolaevna
+];
+VSL
+
+Для VSL используется:
+
+type: "VSL"
+
+VSL может содержать видео:
+
+video: {
+  type: "mp4",
+  url: "https://example.com/video.mp4"
+}
+
+Также поддерживаются:
+
+video: {
+  type: "youtube",
+  url: "https://youtube.com/..."
+}
+
+или:
+
+video: {
+  type: "vimeo",
+  url: "https://vimeo.com/..."
+}
+
+Видео должно отображаться через отдельный компонент.
+
+TSL
+
+Для TSL используется:
+
+type: "TSL"
+
+TSL предназначен для длинных текстовых материалов, историй, интервью и сценариев.
+
+Для интервью рекомендуется использовать отдельные блоки диалога:
+
+{
+  type: "dialogue",
+  speaker: "Репортёр",
+  text: "Текст реплики..."
+}
+
+и:
+
+{
+  type: "dialogue",
+  speaker: "Гость",
+  text: "Текст реплики..."
+}
+Типы статей
+
+В:
+
+src/types/index.ts
+
+должен быть:
+
+export type TabType = "VSL" | "TSL";
+
+Статья использует этот тип:
+
+type: TabType;
+
+Нельзя использовать произвольные значения:
+
+type: "article"
+type: "blog"
+type: "video"
+
+Для основных вкладок используются только:
+
+VSL
+TSL
+Article
+
+Основной тип статьи:
+
+export interface Article {
+  id: string;
+
+  slug: string;
+
+  type: TabType;
+
+  category: string;
+
+  title: string;
+
+  description: string;
+
+  heroImage: string;
+
+  video?: {
+    type: "mp4" | "youtube" | "vimeo";
+    url: string;
+  };
+
+  images: string[];
+
+  benefits: string[];
+
+  content: ArticleBlock[];
+
+  testimonials?: Testimonial[];
+}
+ArticleBlock
+
+Для контента статьи используются отдельные блоки.
+
+export type ArticleBlock =
+  | {
+      type: "text";
+      text: string;
+    }
+  | {
+      type: "dialogue";
+      speaker: "Репортёр" | "Гость";
+      text: string;
+    }
+  | {
+      type: "image";
+      src: string;
+      alt: string;
+    }
+  | {
+      type: "heading";
+      text: string;
+    };
+
+Пример:
+
+content: [
+  {
+    type: "heading",
+    text: "История Инги Николаевны"
+  },
+
+  {
+    type: "dialogue",
+    speaker: "Репортёр",
+    text: "Сегодня к нам на программу пришла..."
+  },
+
+  {
+    type: "dialogue",
+    speaker: "Гость",
+    text: "Здравствуйте. Я немного расскажу о себе..."
+  },
+
+  {
+    type: "image",
+    src: "/images/tsl/inga/1.webp",
+    alt: "Фотография"
+  },
+
+  {
+    type: "text",
+    text: "Дополнительный текст статьи..."
+  }
+]
+Категории
+
+Категория статьи задаётся через:
+
+category: "Истории"
+
+Например:
+
+Истории
+Интервью
+Суставы
+Здоровье
+Красота
+Питание
+
+Категории не должны прописываться вручную в компоненте ArticleList.
+
+Они автоматически собираются из данных статей.
+
+Получение статей
+
+Файл:
+
+src/data/articles/index.ts
+
+должен экспортировать:
+
+export const articles: Article[] = [];
+
+Также используются функции:
+
+export function getArticlesByType(
+  type: Article["type"]
+): Article[] {
+  return articles.filter(
+    (article) => article.type === type
+  );
+}
+export function getCategoriesByType(
+  type: Article["type"]
+): string[] {
+  return [
+    ...new Set(
+      articles
+        .filter((article) => article.type === type)
+        .map((article) => article.category)
+    )
+  ];
+}
+export function getArticleBySlug(
+  slug: string
+): Article | undefined {
+  return articles.find(
+    (article) => article.slug === slug
+  );
+}
+export function getArticlesByCategory(
+  category: string
+): Article[] {
+  return articles.filter(
+    (article) => article.category === category
+  );
+}
+Использование функций
+
+Получить все VSL:
+
+getArticlesByType("VSL");
+
+Получить все TSL:
+
+getArticlesByType("TSL");
+
+Получить категории VSL:
+
+getCategoriesByType("VSL");
+
+Получить категории TSL:
+
+getCategoriesByType("TSL");
+
+Получить статью:
+
+getArticleBySlug("inga-nikolaevna");
+
+Получить статьи категории:
+
+getArticlesByCategory("Истории");
+Товары
+
+Все товары находятся в:
+
+src/data/products/
+
+Каждый товар должен находиться в отдельном файле.
+
+Пример:
+
+src/data/products/
+├── index.ts
+├── product-1.ts
+├── product-2.ts
+└── product-3.ts
+Product
+
+Основной тип:
+
+export interface Product {
+  id: string;
+
+  name: string;
+
+  price: number;
+
+  currency: string;
+
+  image: string;
+
+  variants: ProductVariant[];
+}
+
+Вариант товара:
+
+export interface ProductVariant {
+  id: string;
+
+  name: string;
+
+  price: number;
+}
+Добавление товара
+
+Создать:
+
+src/data/products/product-2.ts
+
+Пример:
+
+import type { Product } from "../../types";
+
+export const product2: Product = {
+  id: "product-2",
+
+  name: "Название товара",
+
+  price: 59,
+
+  currency: "EUR",
+
+  image: "/images/products/product-2.webp",
+
+  variants: [
+    {
+      id: "single",
+      name: "1 шт.",
+      price: 59
+    },
+
+    {
+      id: "double",
+      name: "2 шт.",
+      price: 89
+    },
+
+    {
+      id: "triple",
+      name: "3 шт.",
+      price: 119
+    }
+  ]
+};
+
+После этого добавить товар в:
+
+src/data/products/index.ts
+import { product1 } from "./product-1";
+import { product2 } from "./product-2";
+
+export const products: Product[] = [
+  product1,
+  product2
+];
+Изображения
+
+Все изображения хранятся в:
+
+public/images/
+
+Структура:
+
+public/
+└── images/
+    ├── vsl/
+    ├── tsl/
+    ├── products/
+    └── testimonials/
+
+Пример:
+
+public/images/tsl/inga/hero.webp
+
+В статье путь указывается:
+
+heroImage: "/images/tsl/inga/hero.webp"
+
+Чтобы заменить картинку, достаточно заменить файл в папке.
+
+React-код менять не требуется.
+
+Рекомендации по изображениям
+
+Использовать:
+
+WebP
+JPG
+PNG
+
+Предпочтительно WebP.
+
+Имена файлов должны быть простыми:
+
+hero.webp
+image-1.webp
+image-2.webp
+product.webp
+
+Не использовать пробелы и специальные символы в именах файлов.
+
+Testimonials
+
+Тип отзыва:
+
+export interface Testimonial {
+  id: string;
+
+  name: string;
+
+  text: string;
+
+  image?: string;
+
+  role?: string;
+
+  rating?: number;
+}
+
+Отзывы могут находиться внутри статьи:
+
+testimonials: [
+  {
+    id: "review-1",
+    name: "Анна",
+    text: "Текст отзыва...",
+    rating: 5,
+    image: "/images/testimonials/anna.webp"
+  }
+]
+
+Компонент Testimonials отвечает только за отображение.
+
+Импорты
+
+Использовать alias:
+
+import type { Article } from "@/types";
+
+вместо длинных путей:
+
+import type { Article } from "../../../types";
+
+Для данных:
+
+import { articles } from "@/data/articles";
+import { products } from "@/data/products";
+Компоненты
+
+Компоненты не должны содержать большие массивы данных.
+
+Например, ArticleCard.tsx должен получать статью через props:
+
+interface ArticleCardProps {
+  article: Article;
+}
+
+и отображать:
+
+<ArticleCard article={article} />
+
+Данные должны находиться в:
+
+src/data/
+ArticleList
+
+ArticleList отвечает за:
+
+отображение списка статей;
+переключение VSL / TSL;
+отображение категорий;
+фильтрацию статей;
+передачу статьи в ArticleCard.
+
+ArticleList не должен содержать сами тексты статей.
+
+ArticleCard
+
+ArticleCard отвечает только за отображение карточки.
+
+Он получает:
+
+article: Article
+
+и использует:
+
+article.title
+article.description
+article.heroImage
+article.slug
+article.type
+article.category
+
+Для перехода на статью используется slug.
+
+Например:
+
+/article/inga-nikolaevna
+Hero
+
+Hero отвечает за:
+
+главный заголовок;
+описание;
+переключение VSL / TSL;
+основное изображение;
+CTA.
+
+Тип вкладки:
+
+TabType
+
+Допустимые значения:
+
+VSL
+TSL
+PurchaseForm
+
+Форма покупки должна быть отдельным компонентом:
+
+src/components/PurchaseForm/
+
+Она получает информацию о товаре из:
+
+src/data/products/
+
+Внутри компонента не хранить цены и данные товаров напрямую.
+
+Footer
+
+Footer должен быть отдельным компонентом:
+
+src/components/Footer/
+
+Не дублировать Footer на каждой странице.
+
+Адаптивность
+
+Все компоненты должны быть адаптивными.
+
+Основные требования:
+
+Desktop
+Tablet
+Mobile
+
+Нельзя создавать отдельную мобильную версию сайта.
+
+Использовать responsive-классы Tailwind:
+
+sm:
+md:
+lg:
+xl:
+
+Особое внимание:
+
+навигации;
+Hero;
+видео VSL;
+карточкам статей;
+изображениям;
+форме покупки;
+отзывам;
+Footer.
+
+На мобильных устройствах элементы должны перестраиваться вертикально.
+
+VSL
+
+VSL должен поддерживать:
+
+Видео
+Hero
+Изображения
+Преимущества
+Текст
+Отзывы
+Форма покупки
+Footer
+
+Видео должно быть адаптивным.
+
+TSL
+
+TSL должен поддерживать:
+
+Hero
+Текст
+Диалоги
+Изображения
+Отзывы
+Форма покупки
+Footer
+
+Для диалогов использовать:
+
+speaker: "Репортёр"
+
+или:
+
+speaker: "Гость"
+Важное правило для контента
+
+Не помещать большой текст непосредственно в JSX.
+
+Плохо:
+
+<p>
+  Огромный текст статьи...
+</p>
+
+Правильно:
+
+content: [
+  {
+    type: "text",
+    text: "Текст статьи..."
+  }
+]
+
+После этого React-компонент отображает данные.
+
+Запуск проекта
+
+Установка зависимостей:
+
+npm install
+
+Запуск development-сервера:
+
+npm run dev
+
+Production build:
+
+npm run build
+
+Предпросмотр production build:
+
+npm run preview
+Важное правило для проекта
+
+Не менять архитектуру без необходимости.
+
+Если необходимо добавить:
+
+новую статью → создать файл в src/data/articles/;
+новый товар → создать файл в src/data/products/;
+новую картинку → добавить её в public/images/;
+новый тип данных → добавить тип в src/types/index.ts;
+новый UI → создать отдельный компонент в src/components/.
+
+Не помещать данные в компоненты React.
+
+Общая схема
+DATA
+ ↓
+src/data/
+ ↓
+TYPES
+ ↓
+src/types/
+ ↓
+COMPONENTS
+ ↓
+src/components/
+ ↓
+PAGES
+ ↓
+APP
+
+Данные отделены от интерфейса.
+
+Это позволяет самостоятельно добавлять и изменять статьи, товары, изображения и категории без переписывания React-компонентов.
