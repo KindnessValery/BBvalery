@@ -39,7 +39,7 @@ export const tslIngaNikolaevnaContent: ArticleContentBlock[] = [
 
   {
     type: "image",
-    src: "/images/tsl/inga/pharmastop.jpg",
+    src: "https://bbvalery.b-cdn.net/images/tsl/inga/pharmastop.jpg",
     alt: "pharmastop",
   },
 
@@ -69,7 +69,7 @@ export const tslIngaNikolaevnaContent: ArticleContentBlock[] = [
 
   {
     type: "image",
-    src: "/images/tsl/inga/stairs.jpg",
+    src: "https://bbvalery.b-cdn.net/images/tsl/inga/stairs.jpg",
     alt: "pharmastop",
   },
 
@@ -93,7 +93,7 @@ export const tslIngaNikolaevnaContent: ArticleContentBlock[] = [
 
   {
     type: "image",
-    src: "/images/tsl/inga/run.jpg",
+    src: "https://bbvalery.b-cdn.net/images/tsl/inga/run.jpg",
     alt: "pharmastop",
   },
 
@@ -117,7 +117,7 @@ export const tslIngaNikolaevnaContent: ArticleContentBlock[] = [
 
   {
     type: "image",
-    src: "/images/tsl/inga/walk.jpg",
+    src: "https://bbvalery.b-cdn.net/images/tsl/inga/walk.jpg",
     alt: "pharmastop",
   },
 
@@ -141,7 +141,7 @@ export const tslIngaNikolaevnaContent: ArticleContentBlock[] = [
 
   {
     type: "image",
-    src: "/images/tsl/inga/seat.jpg",
+    src: "https://bbvalery.b-cdn.net/images/tsl/inga/seat.jpg",
     alt: "pharmastop",
   },
 
@@ -189,7 +189,7 @@ export const tslIngaNikolaevnaContent: ArticleContentBlock[] = [
 
   {
     type: "image",
-    src: "/images/tsl/inga/smile.jpg",
+    src: "https://bbvalery.b-cdn.net/images/tsl/inga/smile.jpg",
     alt: "pharmastop",
   },
 

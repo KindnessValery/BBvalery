@@ -15,7 +15,7 @@ export const tslIngaNikolaevna: Article = {
 
   description: "История Инги Николаевны",
 
-  heroImage: "/images/tsl/inga/hero.jpg",
+  heroImage: "https://bbvalery.b-cdn.net/images/tsl/inga/hero.jpg",
 
   images: [],
 
