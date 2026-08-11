@@ -1,18 +1,18 @@
-import type { Article } from "../../types";
+import type { Article } from "../../../types";
 
-export const vslProduct1: Article = {
-  id: "vsl-inga-nikolaevna",
-  slug: "vsl",
+export const vslProduct2: Article = {
+  id: "vsl-inga-nikolaevna2",
+  slug: "vsl2",
   type: "VSL",
   category: "Видеоистории",
   title:
     "Я думала, что активная жизнь осталась в прошлом… Пока старый знакомый не рассказал мне об этом рецепте",
-  description: "Узнайте, как вылечить суставы.",
+  description: "Узнайте, как вылечить суставы.2",
   heroImage: "https://bbvalery.b-cdn.net/images/tsl/inga/hero.jpg",
 
   video: {
     type: "bunny",
-    url: "https://player.mediadelivery.net/embed/725227/80f5c21c-bc66-499e-b5ac-a8151a5709e9",
+    url: "https://player.mediadelivery.net/play/725227/103a5839-1879-47fd-832c-e2947d4eb277",
   },
 
   images: [

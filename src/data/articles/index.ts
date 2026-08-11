@@ -1,10 +1,16 @@
 import type { Article } from "@/types";
 
-import { vslProduct1 } from "./vsl-product-1";
+import { vslProduct1 } from "./vsl/vsl-product-1";
 import { tslIngaNikolaevna } from "./tsl/tsl-inga-nikolaevna";
 import { tslParasit } from "./tsl/tsl-parasits";
+import { vslProduct2 } from "./vsl/vsl-product-2";
 
-export const articles: Article[] = [vslProduct1, tslIngaNikolaevna, tslParasit];
+export const articles: Article[] = [
+  vslProduct1,
+  vslProduct2,
+  tslIngaNikolaevna,
+  tslParasit,
+];
 
 export function getArticlesByType(type: Article["type"]): Article[] {
   return articles.filter((article) => article.type === type);
