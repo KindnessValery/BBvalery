@@ -1,5 +1,5 @@
 import type { Article } from "@/types";
-import { tslIngaNikolaevnaContent } from "./content/tsl-inga-nikolaevna-content";
+import { tslIngaNikolaevnaContent } from "../content/tsl-inga-nikolaevna-content";
 
 export const tslIngaNikolaevna: Article = {
   id: "tsl-inga-nikolaevna",
